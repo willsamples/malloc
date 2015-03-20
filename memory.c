@@ -20,7 +20,7 @@ void heap_init()
 
     for ( i = 0; i < HEAP_SIZE; ++i )
     {
-		// Set initial value for demo purposes
+	// Set initial value for demo purposes
         heap[i] = 0xFE;
     }
 }
@@ -50,7 +50,7 @@ unsigned char * alloc( int data_size )
     // this is why you might see (address+size-1) used to get the
     // last byte in a block
 
-	ListNode * travel, * node;
+    ListNode * travel, * node;
     unsigned char * addr = heap;
     MBLK * mblk;
     int address_collides;
@@ -61,7 +61,7 @@ unsigned char * alloc( int data_size )
     if (data_size % 4 != 0)
         data_size += 4 - (data_size % 4);
 
-	// block_size: how much of the heap we will actually be consuming
+    // block_size: how much of the heap we will actually be consuming
     int block_size = data_size + sizeof(MBLK) + sizeof(ListNode);
 
 	
@@ -81,7 +81,7 @@ unsigned char * alloc( int data_size )
         // and test if allocating at addr would collide with the memory already
         // allocated to the existing block. If so, set addr to the next byte
         // in the heap after the existing memory block and start over. When
-		// there is no collision, we have a workable address space for the user
+        // there is no collision, we have a workable address space for the user
         while (travel != 0 && address_collides == FALSE)
         {
             mblk = (MBLK*) travel->data;
@@ -105,7 +105,7 @@ unsigned char * alloc( int data_size )
             travel = travel->next;
         }
     }
-	// need to start the iteration over with a new addr value if we failed our test
+    // need to start the iteration over with a new addr value if we failed our test
     while (address_collides == TRUE);
 
 
@@ -116,7 +116,7 @@ unsigned char * alloc( int data_size )
         addr[i] = 0xAA; // initial value for demo purposes
     }
 
-	// append our MBLK and ListNode data so we can keep track of the allocation
+    // append our MBLK and ListNode data so we can keep track of the allocation
     mblk = (MBLK*) (addr+data_size);
     mblk->addr = addr;
     mblk->len  = block_size;
